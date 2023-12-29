@@ -117,18 +117,3 @@ responseHandler
 const resultResponse = responseHandler.handle(response);
 
 console.log(resultResponse);
-/*
-{
-  "statusCode": 200,
-  "body": {
-    "designPatternName": "Chain of Responsibility",
-    "patternCategory": "Behavioral",
-    "complexityPercentage": 80
-  },
-  "authentication": {
-    "api_token": "encrypted-12345678",
-    "refresh_token": "encrypted-ABCDEFGH"
-  },
-  "message": "Success"
-}
-*/

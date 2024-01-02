@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Post {
-    // other properties
-    constructor(id, content, postedBy) {
+class PostComment {
+    constructor(id, content, commentedBy) {
         this.id = id;
         this.content = content;
-        this.postedBy = postedBy;
+        this.commentedBy = commentedBy;
         // initialize other properties
     }
 }
-exports.default = Post;
+exports.default = PostComment;

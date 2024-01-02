@@ -1,9 +1,7 @@
 // require is the old way to import. the new way is import and export
 const fs = require("fs"); // node js module
 const notes = require("./notes.js"); // module by me
-const validator = require("validator"); // npm module
 const yargs = require("yargs"); // npm module
-const { argv } = require("process");
 
 // add new note
 yargs.command({

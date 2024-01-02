@@ -13,3 +13,5 @@ class PostComment {
   // business logic methods
   // ...
 }
+
+export default PostComment;

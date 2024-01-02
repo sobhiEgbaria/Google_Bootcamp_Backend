@@ -13,3 +13,5 @@ class UserDetails {
 
   // business logic methods if needed
 }
+
+export default UserDetails;

@@ -1,5 +1,6 @@
 "use strict";
-class User {
+Object.defineProperty(exports, "__esModule", { value: true });
+class UserDetails {
     // other properties
     constructor(id, username, email) {
         this.id = id;
@@ -8,3 +9,4 @@ class User {
         // initialize other properties if needed
     }
 }
+exports.default = UserDetails;

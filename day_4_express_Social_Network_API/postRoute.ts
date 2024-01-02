@@ -43,6 +43,8 @@ postRoute.put("/:id", (req: Request, res: Response) => {
   }
 
   // Assuming the request body contains the updated fields for the post
+  // Assuming the request body contains the updated fields for the post
+
   db.updatePost(postId, req.body);
   const updatedPost = db.getPost(postId);
   res.status(200).send(updatedPost);

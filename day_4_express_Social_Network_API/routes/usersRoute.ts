@@ -1,16 +1,18 @@
 import express, { Request, Response } from "express";
-import User from "./User";
-import InMemoryDB from "./InMemoryDB";
+import User from "../models/User";
+import InMemoryDB from "../utils/InMemoryDB";
+import { UserBL } from "../BL/UserBL";
 
 const db = InMemoryDB.getInstance();
 
 const router = express.Router();
+const userBL = new UserBL();
 
 // Users API
 router.post("/", (req: Request, res: Response) => {
   const userData = req.body;
-  const user = new User(userData.id, userData.username, userData.email);
-  db.addUser(user);
+  const user = new User(+userData.id, userData.username, userData.email);
+  userBL.addUser(user);
   res.status(201).send(user);
 });
 
@@ -32,7 +34,7 @@ router.put("/:id", (req: Request, res: Response) => {
   }
 
   // Assuming the request body contains the fields to be updated
-  db.updateUser(userId, req.body);
+  userBL.updateUser(userId, req.body);
   const updatedUser = db.getUser(userId);
   res.status(200).send(updatedUser);
 });
@@ -45,7 +47,7 @@ router.delete("/:id", (req: Request, res: Response) => {
     return res.status(404).send("User not found");
   }
 
-  db.deleteUser(userId);
+  userBL.deleteUser(userId);
   res.status(200).send({ message: `User ${userId} deleted successfully` });
 });
 export default router;

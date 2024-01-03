@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import Post from "./Post";
-import InMemoryDB from "./InMemoryDB";
+import Post from "../models/Post";
+import InMemoryDB from "../utils/InMemoryDB";
 
 const db = InMemoryDB.getInstance();
 const postRoute = express.Router();
@@ -10,7 +10,7 @@ postRoute.post("/", (req: Request, res: Response) => {
   const postData = req.body;
   const post = new Post(postData.id, postData.content, postData.postedBy);
   db.addPost(post);
-  res.status(201).send(post);
+  res.sendStatus(201).send(post);
 });
 
 postRoute.get("/:id", (req: Request, res: Response) => {

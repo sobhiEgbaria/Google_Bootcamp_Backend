@@ -1,6 +1,6 @@
-import User from "./User";
-import Post from "./Post";
-import PostComment from "./PostComment";
+import User from "../models/User";
+import Post from "../models/Post";
+import PostComment from "../PostComment";
 
 class InMemoryDB {
   private static instance: InMemoryDB;

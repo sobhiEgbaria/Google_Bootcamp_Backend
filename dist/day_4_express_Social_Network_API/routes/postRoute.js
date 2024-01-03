@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const Post_1 = __importDefault(require("./Post"));
-const InMemoryDB_1 = __importDefault(require("./InMemoryDB"));
+const Post_1 = __importDefault(require("../models/Post"));
+const InMemoryDB_1 = __importDefault(require("../utils/InMemoryDB"));
 const db = InMemoryDB_1.default.getInstance();
 const postRoute = express_1.default.Router();
 // Posts API

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import Comment from "./PostComment";
-import InMemoryDB from "./InMemoryDB";
+import Comment from "../PostComment";
+import InMemoryDB from "../utils/InMemoryDB";
 
 const db = InMemoryDB.getInstance();
 const commentRoute = express.Router();

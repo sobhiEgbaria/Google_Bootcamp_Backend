@@ -7,11 +7,7 @@ class PostComment {
     this.id = id;
     this.content = content;
     this.commentedBy = commentedBy;
-    // initialize other properties
   }
-
-  // business logic methods
-  // ...
 }
 
 export default PostComment;

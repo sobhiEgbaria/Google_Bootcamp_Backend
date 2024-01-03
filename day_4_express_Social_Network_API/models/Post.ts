@@ -8,10 +8,7 @@ class Post {
     this.id = id;
     this.content = content;
     this.postedBy = postedBy;
-    // initialize other properties
   }
-
-  // business logic methods
 }
 
 export default Post;

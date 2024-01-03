@@ -1,5 +1,3 @@
-// activityLogger.ts
-
 import { Request, Response, NextFunction } from "express";
 
 const activityLogger = (req: Request, res: Response, next: NextFunction) => {

@@ -1,7 +1,5 @@
 import express from "express";
-import { apiData } from "../../utils/weatherStackApi.js";
-import path from "path";
-import { dirname } from "path";
+import { apiData } from "../utils/weatherStackApi.js";
 
 const app = express();
 const port = 3000;

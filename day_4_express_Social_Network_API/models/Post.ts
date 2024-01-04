@@ -2,7 +2,6 @@ class Post {
   id: number;
   content: string;
   postedBy: number; // user ID
-  // other properties
 
   constructor(id: number, content: string, postedBy: number) {
     this.id = id;

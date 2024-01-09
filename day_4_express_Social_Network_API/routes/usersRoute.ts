@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import User from "../models/User";
 import InMemoryDB from "../utils/InMemoryDB";
-import { UserBL } from "../BL/UserBL";
+import { UserBL } from "../Services/UserBL";
 
 const db = InMemoryDB.getInstance();
 

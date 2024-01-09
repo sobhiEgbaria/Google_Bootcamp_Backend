@@ -14,10 +14,10 @@ CREATE TABLE cities (   --CREATE TABLE => keyWord --cities => identifier
   area INTEGER
 );
 
-
 --add one row to the data base
 INSERT INTO cities (name,country,population,area)
-VALUES('quds','pls','3000','114');
+VALUES('Tokyo','Japan','3000','114');
+
 
 --add multiple row to database
 INSERT INTO cities (name,country,population,area)

@@ -1,124 +1,94 @@
 import express from "express";
-import Joi from "joi";
+import {
+  Author,
+  validationNewAuthor,
+  validationUpdate,
+} from "../models/Author.js";
 
 const authorRouter = express.Router();
 
-const authors = [
-  {
-    id: 1,
-    firstName: "naseem",
-    lastName: "wattd",
-    nationally: "usa",
-    image: "url.....",
-  },
-  {
-    id: 2,
-    firstName: "majd",
-    lastName: "hamdi",
-    nationally: "africa",
-    image: "url.....",
-  },
-];
-
-authorRouter.get("/", (req, res) => {
-  res.json(authors);
+authorRouter.get("/", async (req, res) => {
+  try {
+    const authors = await Author.find();
+    res.json(authors);
+  } catch (error) {
+    res.status(500).send("something went wrong");
+  }
 });
 
 //get author by id
-authorRouter.get("/:id", (req, res) => {
-  const id = parseInt(req.params.id); // convert the id to number
-  const author = authors.find((author) => {
-    return author.id === id;
-  });
-  if (author) {
+authorRouter.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const author = await Author.findById(id);
+
     res.status(200).send(author);
-  } else {
+  } catch (error) {
     res.status(400).send("author not found");
   }
 });
 
 // add new author
-authorRouter.post("/", (req, res) => {
+authorRouter.post("/", async (req, res) => {
   const { error } = validationNewAuthor(req.body);
 
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
 
-  const newAuthor = {
-    id: Date.now(),
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    nationally: req.body.nationally,
-    image: req.body.image,
-  };
+  try {
+    const newAuthor = new Author({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      nationally: req.body.nationally,
+      image: req.body.image,
+    });
 
-  authors.push(newAuthor);
-  res.send("author added successfully");
+    const result = await newAuthor.save();
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
 });
 
 // update author details
-authorRouter.put("/:id", (req, res) => {
-  const id = parseInt(req.params.id); // convert the id to number
-
-  const { error } = validationUpdate(req.body);
-
-  if (error) {
-    return res.status(400).send(error.details[0].message);
+authorRouter.put("/:id", async (req, res) => {
+  const { err } = validationUpdate(req.body);
+  if (err) {
+    return res.status(400).send(err.details[0].message);
   }
 
-  const author = authors.find((author) => {
-    return author.id === id;
-  });
-  if (author) {
-    res.status(200).send({ message: "author not updated" });
-  } else {
-    res.status(400).send({ message: "author not found" });
-  }
-});
-
-authorRouter.delete("/:id", (req, res) => {
-  const id = parseInt(req.params.id); // convert the id to number
-
-  const author = authors.find((author) => {
-    return author.id === id;
-  });
-  if (author) {
-    res.status(200).send({ message: "author not deleted" });
-  } else {
-    res.status(400).send({ message: "author not found" });
+  try {
+    const id = req.params.id;
+    const author = await Author.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          nationally: req.body.nationally,
+          image: req.body.image,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).send(author);
+  } catch (error) {
+    res.status(500).send({ message: error });
   }
 });
 
-` 
-id: 1,
-firstName: "naseem",
-lastName: "wattd",
-nationally: "usa",
-image: "url.....",`;
+authorRouter.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
 
-// validation function
+    await Author.findByIdAndDelete(id);
 
-const validationNewAuthor = (newBook) => {
-  const schema = Joi.object({
-    firstName: Joi.string().min(2).max(20).required().trim(),
-    lastName: Joi.string().min(2).max(20).required().trim(),
-    nationally: Joi.string().min(2).max(20).required().trim(),
-    image: Joi.string(),
-  });
-
-  return schema.validate(newBook); // this line return error or null
-};
-
-const validationUpdate = (newBook) => {
-  const schema = Joi.object({
-    firstName: Joi.string().min(2).max(20).trim(),
-    lastName: Joi.string().min(2).max(20).trim(),
-    nationally: Joi.string().min(2).max(20).trim(),
-    image: Joi.string(),
-  });
-
-  return schema.validate(newBook); // this line return error or null
-};
+    res.status(200).send({ message: "author is deleted" });
+  } catch (error) {
+    res.status(400).send({ message: error });
+  }
+});
 
 export default authorRouter;

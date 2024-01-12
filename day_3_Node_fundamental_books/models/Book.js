@@ -7,7 +7,7 @@ const BookSchema = new mongoose.Schema({
     required: true,
     term: true,
     minlength: 3,
-    maxlength: 20,
+    maxlength: 200,
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -28,10 +28,10 @@ const BookSchema = new mongoose.Schema({
 
 export const validationNewBook = (newBook) => {
   const schema = Joi.object({
-    title: Joi.string().min(3).max(20).required().trim(),
+    title: Joi.string().min(3).max(200).required().trim(),
     description: Joi.string().min(3).max(200).required().trim(),
-    author: Joi.string().min(3).max(20).required().trim(),
-    price: Joi.number().min(0).max(20).required(),
+    author: Joi.string().required().trim(),
+    price: Joi.number().required(),
   });
 
   return schema.validate(newBook); // this line return error or null
@@ -39,10 +39,10 @@ export const validationNewBook = (newBook) => {
 
 export const validationUpdate = (newBook) => {
   const schema = Joi.object({
-    title: Joi.string().min(3).max(20).trim(),
+    title: Joi.string().min(3).max(200).trim(),
     description: Joi.string().min(3).max(200).required().trim(),
-    author: Joi.string().min(3).max(20).trim(),
-    price: Joi.number().min(0).max(20),
+    author: Joi.string().trim(),
+    price: Joi.number(),
   });
 
   return schema.validate(newBook); // this line return error or null

@@ -5,7 +5,7 @@ const booksRoute = express.Router();
 // get all books
 booksRoute.get("/", async (req, res) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().populate("author", ["firstName"]);
     res.send(books);
   } catch (error) {
     res.status(200).send({ message: error });
@@ -17,11 +17,11 @@ booksRoute.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const book = await Book.findById(id);
+    const book = await Book.findById(id).populate("author", ["firstName"]);
 
     res.status(200).send(book);
   } catch (error) {
-    res.status(400).send({ message: error });
+    res.status(400).send({ message: "book not found" });
   }
 });
 
@@ -81,7 +81,7 @@ booksRoute.delete("/:id", async (req, res) => {
     const id = req.params.id;
     await Book.findByIdAndDelete(id);
 
-    res.status(200).send({ message: "book not deleted" });
+    res.status(200).send({ message: "book is deleted" });
   } catch (error) {
     res.status(400).send({ message: error });
   }

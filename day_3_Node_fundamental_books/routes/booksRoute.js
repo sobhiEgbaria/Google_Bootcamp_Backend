@@ -1,111 +1,90 @@
 import express from "express";
-import Joi from "joi"; // npm package to add validation
-
+import { Book, validationUpdate, validationNewBook } from "../models/Book.js";
 const booksRoute = express.Router();
 
-const books = [
-  {
-    id: 1,
-    title: "game of thrones",
-    author: "G.R.M",
-    price: 20,
-  },
-  {
-    id: 2,
-    title: "house of dragon",
-    author: "G.R.M",
-    price: 20,
-  },
-];
-
-booksRoute.get("/", (req, res) => {
-  res.json(books);
+// get all books
+booksRoute.get("/", async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.send(books);
+  } catch (error) {
+    res.status(200).send({ message: error });
+  }
 });
 
 //get book by id
-booksRoute.get("/:id", (req, res) => {
-  const id = parseInt(req.params.id); // convert the id to number
-  const book = books.find((book) => {
-    return book.id === id;
-  });
-  if (book) {
+booksRoute.get("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const book = await Book.findById(id);
+
     res.status(200).send(book);
-  } else {
-    res.status(400).send("book not found");
+  } catch (error) {
+    res.status(400).send({ message: error });
   }
 });
 
 // add new book
-booksRoute.post("/", (req, res) => {
+booksRoute.post("/", async (req, res) => {
   const { error } = validationNewBook(req.body);
 
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
 
-  const newBook = {
-    id: Date.now(),
-    title: req.body.title,
-    author: req.body.author,
-    price: req.body.price,
-  };
-
-  books.push(newBook);
-  res.send("book added successfully");
+  try {
+    const newBook = new Book({
+      title: req.body.title,
+      author: req.body.author,
+      price: req.body.price,
+      description: req.body.description,
+    });
+    const result = await newBook.save();
+    res.status(201).send(result);
+  } catch (error) {
+    res.status(400).send({ message: error });
+  }
 });
 
-booksRoute.put("/:id", (req, res) => {
-  const id = parseInt(req.params.id); // convert the id to number
-
+// update book By Id
+booksRoute.put("/:id", async (req, res) => {
   const { error } = validationUpdate(req.body);
-
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
 
-  const book = books.find((book) => {
-    return book.id === id;
-  });
-  if (book) {
-    res.status(200).send({ message: "book not updated" });
-  } else {
-    res.status(400).send({ message: "book not found" });
+  try {
+    const id = req.params.id;
+
+    const updatedBook = await Book.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          title: req.body.title,
+          author: req.body.author,
+          price: req.body.price,
+          description: req.body.description,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).send(updatedBook);
+  } catch (error) {
+    res.status(400).send({ message: error });
   }
 });
 
-booksRoute.delete("/:id", (req, res) => {
-  const id = parseInt(req.params.id); // convert the id to number
+booksRoute.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Book.findByIdAndDelete(id);
 
-  const book = books.find((book) => {
-    return book.id === id;
-  });
-  if (book) {
     res.status(200).send({ message: "book not deleted" });
-  } else {
-    res.status(400).send({ message: "book not found" });
+  } catch (error) {
+    res.status(400).send({ message: error });
   }
 });
-
-// validation function
-
-const validationNewBook = (newBook) => {
-  const schema = Joi.object({
-    title: Joi.string().min(3).max(20).required().trim(),
-    author: Joi.string().min(3).max(20).required().trim(),
-    price: Joi.number().min(0).max(20).required(),
-  });
-
-  return schema.validate(newBook); // this line return error or null
-};
-
-const validationUpdate = (newBook) => {
-  const schema = Joi.object({
-    title: Joi.string().min(3).max(20).trim(),
-    author: Joi.string().min(3).max(20).trim(),
-    price: Joi.number().min(0).max(20),
-  });
-
-  return schema.validate(newBook); // this line return error or null
-};
 
 export default booksRoute;

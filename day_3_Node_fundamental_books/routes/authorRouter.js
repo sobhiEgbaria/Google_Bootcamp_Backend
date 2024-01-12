@@ -47,7 +47,6 @@ authorRouter.post("/", async (req, res) => {
     const result = await newAuthor.save();
     res.send(result);
   } catch (error) {
-    console.log(error);
     res.status(500);
   }
 });

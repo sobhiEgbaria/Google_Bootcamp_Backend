@@ -13,7 +13,7 @@ booksRoute.get("/", async (req, res) => {
 });
 
 //get book by id
-booksRoute.get("/:id", async (req, res) => {
+booksRoute.get("/:id", async (req, res, next) => {
   const id = req.params.id;
 
   try {
@@ -21,7 +21,7 @@ booksRoute.get("/:id", async (req, res) => {
 
     res.status(200).send(book);
   } catch (error) {
-    res.status(400).send({ message: "book not found" });
+    res.status(500).send({ message: error.message });
   }
 });
 

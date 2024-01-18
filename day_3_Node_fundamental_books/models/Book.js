@@ -1,28 +1,31 @@
 import mongoose from "mongoose";
 import Joi from "joi";
 
-const BookSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    term: true,
-    minlength: 3,
-    maxlength: 200,
+const BookSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      term: true,
+      minlength: 3,
+      maxlength: 200,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Author",
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      term: true,
+      minlength: 3,
+      maxlength: 200,
+    },
+    price: { type: Number, required: true },
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Author",
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-    term: true,
-    minlength: 3,
-    maxlength: 200,
-  },
-  price: { type: Number, required: true },
-});
+  { timestamps: true }
+);
 
 // validation function
 

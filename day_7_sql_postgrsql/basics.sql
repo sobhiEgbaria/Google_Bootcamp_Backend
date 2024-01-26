@@ -14,6 +14,21 @@ CREATE TABLE cities (   --CREATE TABLE => keyWord --cities => identifier
   area INTEGER
 );
 
+CREATE TABLE posts ( 
+  id BIGSERIAL NOT NULL PRIMARY KEY,
+  date   DATE NOT NULL DEFAULT CURRENT_DATE,
+  title VARCHAR(50) NOT NULL,
+  description VARCHAR(50) NOT NULL,
+  body TEXT NOT NULL,
+	img TEXT NOT NULL,
+  category VARCHAR(50)NOT NULL,
+  postedBy VARCHAR(50) NOT NULL
+);
+
+INSERT INTO posts (title,description,body,img,category,postedBy)
+VALUES('third blog' ,'description 333333333','body 3333333333','https://images.unsplash.com/photo-1629019725048-75f3fd5edd1c?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D','web','sobhi');
+      
+
 --add one row to the data base
 INSERT INTO cities (name,country,population,area)
 VALUES('Tokyo','Japan','3000','114');

@@ -25,4 +25,4 @@ const routersHandler = (req, res) => {
   }
 };
 
-module.exports = { routersHandler };
+export { routersHandler };

@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p .",
-    "start": "node dist/day_4_express_Social_Network_API/index.js  "
+    "start": "node dist/day_4_express_Social_Network_API/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,6 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.1.10"
   }
 }

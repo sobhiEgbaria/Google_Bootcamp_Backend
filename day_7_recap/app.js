@@ -1,5 +1,5 @@
-const http = require("http");
-const { routersHandler } = require("./routes");
+import http from "http";
+import { routersHandler } from "./routes.js";
 
 const server = http.createServer(routersHandler);
 

@@ -2,13 +2,12 @@ import express from "express";
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log("the first mid");
-  next();
+app.use("/games", (req, res, next) => {
+  res.send("welcome in the game route");
 });
 
-app.use((req, res, next) => {
-  res.send("hi the second mid");
+app.use("/", (req, res, next) => {
+  res.send("home route");
 });
 
 app.listen(3000);

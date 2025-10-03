@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p .",
-    "start": "nodemon day_8_express/app.js",
+    "start": "nodemon shop_app/app.js",
     "dev": ""
   },
   "author": "",

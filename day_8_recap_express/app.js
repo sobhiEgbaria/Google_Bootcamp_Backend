@@ -7,10 +7,10 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "/public")));
 
 app.get("/", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "/", "index.html"));
+  res.sendFile(path.join(__dirname, "/", "navbar-app/index.html"));
 });
 
 app.all("*", (req, res, next) => {

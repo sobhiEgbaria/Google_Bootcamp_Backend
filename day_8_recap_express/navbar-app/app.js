@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import { products } from "../data.js";
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,7 +10,11 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.get("/", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "/", "navbar-app/index.html"));
+  res.sendFile(path.join(__dirname, "/", "/index.html"));
+});
+
+app.get("/json", (req, res, next) => {
+  res.json(products);
 });
 
 app.all("*", (req, res, next) => {
